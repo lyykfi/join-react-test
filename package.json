@@ -12,6 +12,7 @@
     "react-dom": "^16.13.1"
   },
   "scripts": {
+	"heroku-prebuild": "yarn install --production=false",
 	"dev": "webpack-dev-server --open --config webpack.dev.js",
 	"start": "webpack --config webpack.prod.js"
   },
