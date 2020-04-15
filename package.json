@@ -8,13 +8,15 @@
   "dependencies": {
     "@types/react": "^16.9.34",
     "@types/react-dom": "^16.9.6",
+    "express": "^4.17.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1"
   },
   "scripts": {
-	"heroku-prebuild": "yarn install --production=false",
-	"dev": "webpack-dev-server --open --config webpack.dev.js",
-	"start": "webpack --config webpack.prod.js"
+    "heroku-prebuild": "yarn install --production=false",
+    "dev": "webpack-dev-server --open --config webpack.dev.js",
+    "start": "yarn build && node ./server.js",
+    "build": "webpack --config webpack.prod.js"
   },
   "devDependencies": {
     "@babel/core": "^7.9.0",
