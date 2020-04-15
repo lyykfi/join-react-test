@@ -1,0 +1,13 @@
+{
+	"compilerOptions": {
+		"target": "es5",
+		"module": "CommonJS",
+		"strict": true,
+		"esModuleInterop": true,
+		"forceConsistentCasingInFileNames": true,
+		"baseUrl": "./src/",
+		"jsx": "preserve",
+	},
+	"include": ["src/**/*"],
+	"exclude": ["node_modules"]
+}
