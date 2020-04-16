@@ -7,13 +7,13 @@ import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 
 interface MainLayoutProps {
-	title: string,
-	children: JSX.Element,
+	title: string;
+	children: JSX.Element;
 }
 
 const MainLayout: React.FC<MainLayoutProps> = (props: MainLayoutProps) => {
 	const { title } = props;
- 
+
 	return (
 		<>
 			<AppBar position="static">
@@ -28,13 +28,9 @@ const MainLayout: React.FC<MainLayoutProps> = (props: MainLayoutProps) => {
 				</Toolbar>
 			</AppBar>
 
-			<div className="center">
-				{props.children}
-			</div>
+			<div className="center">{props.children}</div>
 		</>
 	);
 };
 
 export default MainLayout;
-
-

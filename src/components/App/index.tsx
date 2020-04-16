@@ -7,7 +7,7 @@ import RecruterPage from 'pages/RecruterPage';
 import CandidatePage from 'pages/CandidatePage';
 import { getStore } from 'store';
 
-const App = () => {
+const App = (): JSX.Element => {
 	return (
 		<Provider store={getStore()}>
 			<CssBaseline />
