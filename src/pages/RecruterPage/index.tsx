@@ -3,7 +3,11 @@ import MainLayout from 'layouts/main';
 
 const RecruterPage = () => {
 	return (
-		<MainLayout>RecruterPage</MainLayout>
+		<MainLayout title="Recruter page">
+			<div>
+				RecruterPage
+			</div>
+		</MainLayout>
 	);
 };
 
