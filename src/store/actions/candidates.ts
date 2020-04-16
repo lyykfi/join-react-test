@@ -2,6 +2,7 @@ import { createAction, Dispatch } from '@reduxjs/toolkit';
 
 import { fetchCandidatesRequest } from 'store/api/candidates';
 import { Candidate } from 'models/candidate';
+import { addIds } from 'utils/candidates';
 
 export const getCandidateListStart = createAction('GET_CANDIDATE_LIST_START');
 
@@ -13,6 +14,10 @@ export const getCandidateListFail = createAction<Error>(
 	'GET_CANDIDATE_LIST_FAIL',
 );
 
+export const deleteCandidateById = createAction<string>(
+	'DELETE_CANDIDATE_BY_ID',
+);
+
 export const getCandidateList = () => {
 	return async (dispatch: Dispatch): Promise<Candidate[] | null> => {
 		dispatch(getCandidateListStart());
@@ -20,7 +25,7 @@ export const getCandidateList = () => {
 		try {
 			const candidates = await fetchCandidatesRequest();
 
-			dispatch(getCandidateListSuccess(candidates));
+			dispatch(getCandidateListSuccess(addIds(candidates)));
 
 			return candidates;
 		} catch (e) {

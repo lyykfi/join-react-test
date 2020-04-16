@@ -1,5 +1,4 @@
 import React, { useMemo } from 'react';
-import hash from 'object-hash';
 
 import { Candidate } from 'models/candidate';
 import { CandidateListWrapper } from './styled';
@@ -10,18 +9,17 @@ interface CandidateListProps {
 	candidateList: (Candidate | null)[];
 	isLoading: boolean;
 	error: Error | null;
+	onDeleteCandidate: (id: string) => void;
 }
 
 const CandidateList: React.FC<CandidateListProps> = (
 	props: CandidateListProps,
 ): JSX.Element => {
-	const { candidateList, isLoading, error } = props;
+	const { candidateList, isLoading, error, onDeleteCandidate } = props;
 
 	const data = useMemo(() => {
 		return isLoading ? Array(5).fill(null) : candidateList;
 	}, [isLoading, candidateList]);
-
-	console.log(error);
 
 	if (error) {
 		return <ErrorMessage text={error.message} />;
@@ -32,7 +30,8 @@ const CandidateList: React.FC<CandidateListProps> = (
 			{data.map((item, key) => {
 				return (
 					<CandidateListItem
-						key={item ? hash(item) : key}
+						onDeleteCandidate={onDeleteCandidate}
+						key={item ? item.id : key}
 						candidate={item}
 					/>
 				);

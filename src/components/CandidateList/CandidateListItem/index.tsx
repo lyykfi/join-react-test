@@ -1,11 +1,13 @@
 /* eslint-disable react/jsx-no-undef */
-import React from 'react';
+import React, { useCallback } from 'react';
 import {
 	CardHeader,
 	Avatar,
 	CardContent,
 	Typography,
 	IconButton,
+	Menu,
+	MenuItem,
 } from '@material-ui/core';
 import Skeleton from '@material-ui/lab/Skeleton';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
@@ -15,12 +17,31 @@ import { StyledCard, StyledCardActions } from './styled';
 
 interface CandidateListItemProps {
 	candidate: Candidate | null;
+	onDeleteCandidate: (id: string) => void;
 }
 
 const CandidateListItem: React.FC<CandidateListItemProps> = (
 	props: CandidateListItemProps,
 ): JSX.Element => {
-	const { candidate } = props;
+	const { candidate, onDeleteCandidate } = props;
+	const [popupEl, setPopupEl] = React.useState(null);
+
+	const onShowMenuCallback = useCallback(
+		(event) => {
+			setPopupEl(event.currentTarget);
+		},
+		[setPopupEl],
+	);
+
+	const handleClose = useCallback(() => {
+		setPopupEl(null);
+	}, []);
+
+	const onDeleteCandidateCallback = useCallback(() => {
+		if (candidate) {
+			onDeleteCandidate(candidate.id);
+		}
+	}, [onDeleteCandidate, candidate]);
 
 	return (
 		<StyledCard variant="outlined">
@@ -83,9 +104,25 @@ const CandidateListItem: React.FC<CandidateListItemProps> = (
 				</CardContent>
 				<StyledCardActions disableSpacing>
 					{candidate ? (
-						<IconButton aria-label="settings">
-							<MoreVertIcon />
-						</IconButton>
+						<>
+							<IconButton
+								aria-label="settings"
+								onClick={onShowMenuCallback}
+							>
+								<MoreVertIcon />
+							</IconButton>
+							<Menu
+								id="act-menu"
+								anchorEl={popupEl}
+								keepMounted
+								open={Boolean(popupEl)}
+								onClose={handleClose}
+							>
+								<MenuItem onClick={onDeleteCandidateCallback}>
+									Delete
+								</MenuItem>
+							</Menu>
+						</>
 					) : (
 						<Skeleton animation="wave" variant="rect" />
 					)}

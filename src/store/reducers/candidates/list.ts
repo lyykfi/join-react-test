@@ -4,6 +4,7 @@ import {
 	getCandidateListStart,
 	getCandidateListSuccess,
 	getCandidateListFail,
+	deleteCandidateById,
 } from 'store/actions/candidates';
 
 export interface CandidatesListReducerState {
@@ -48,6 +49,17 @@ const candidatesListReducer = createReducer<CandidatesListReducerState>(
 				isLoading: false,
 				candidatesList: [],
 				error: action.payload,
+			};
+		},
+		[deleteCandidateById.type]: (state, action) => {
+			const id = action.payload;
+			const candidatesList = state.candidatesList;
+
+			console.log(candidatesList.filter((val) => val.id !== id));
+
+			return {
+				...state,
+				candidatesList: candidatesList.filter((val) => val.id !== id),
 			};
 		},
 	},
