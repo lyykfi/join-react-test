@@ -6,6 +6,8 @@ import AddIcon from '@material-ui/icons/Add';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 
+import { StyledContainer } from './styled';
+
 interface MainLayoutProps {
 	title: string;
 	children: JSX.Element;
@@ -28,7 +30,7 @@ const MainLayout: React.FC<MainLayoutProps> = (props: MainLayoutProps) => {
 				</Toolbar>
 			</AppBar>
 
-			<div className="center">{props.children}</div>
+			<StyledContainer fixed>{props.children}</StyledContainer>
 		</>
 	);
 };
