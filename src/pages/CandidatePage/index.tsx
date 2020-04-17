@@ -1,12 +1,8 @@
 import React from 'react';
-import CandidateListContainer from 'components/CandidateList/container';
+import MainLayout from 'layouts/main';
 
 const CandidatePage = (): JSX.Element => {
-	return (
-		<div>
-			<CandidateListContainer />
-		</div>
-	);
+	return <MainLayout title="Candidate page">test</MainLayout>;
 };
 
 export default CandidatePage;
