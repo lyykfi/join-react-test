@@ -7,6 +7,9 @@ import RecruterPage from 'pages/RecruterPage';
 import CandidatePage from 'pages/CandidatePage';
 import { getStore } from 'store';
 
+import 'react-circular-progressbar/dist/styles.css';
+
+
 const App = (): JSX.Element => {
 	return (
 		<Provider store={getStore()}>

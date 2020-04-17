@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-no-undef */
-import React, { useCallback } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import {
 	CardHeader,
 	Avatar,
@@ -13,8 +13,13 @@ import Skeleton from '@material-ui/lab/Skeleton';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 
 import { Candidate } from 'models/candidate';
-import { StyledCard, StyledCardActions } from './styled';
+import {
+	StyledCard,
+	StyledCardActions,
+	StyledCircularProgressbar,
+} from './styled';
 import CandidateListItemStatusUpdateDialog from '../CandidateListItemStatusUpdateDialog';
+import { getCandidateProcentageProfile } from 'utils/candidates';
 
 interface CandidateListItemProps {
 	candidate: Candidate | null;
@@ -27,6 +32,10 @@ const CandidateListItem: React.FC<CandidateListItemProps> = (
 	const { candidate, onDeleteCandidate } = props;
 	const [popupEl, setPopupEl] = React.useState(null);
 	const [open, seOpen] = React.useState(false);
+
+	const percentage = useMemo(() => {
+		return candidate ? getCandidateProcentageProfile(candidate) : 0;
+	}, [candidate]);
 
 	const onShowMenuCallback = useCallback(
 		(event) => {
@@ -46,6 +55,7 @@ const CandidateListItem: React.FC<CandidateListItemProps> = (
 	}, [onDeleteCandidate, candidate]);
 
 	const onUpdateCandidateStatusCallback = useCallback(() => {
+		setPopupEl(null);
 		seOpen(true);
 	}, [seOpen]);
 
@@ -85,7 +95,14 @@ const CandidateListItem: React.FC<CandidateListItemProps> = (
 							<Skeleton animation="wave" variant="text" />
 						)
 					}
-					action={candidate ? 'test' : null}
+					action={
+						candidate ? (
+							<StyledCircularProgressbar
+								value={percentage}
+								text={`${percentage}%`}
+							/>
+						) : null
+					}
 				/>
 				<CardContent>
 					{candidate ? (
