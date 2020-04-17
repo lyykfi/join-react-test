@@ -1,10 +1,13 @@
 import { createReducer } from '@reduxjs/toolkit';
+import update from 'immutability-helper';
+
 import { Candidate } from 'models/candidate';
 import {
 	getCandidateListStart,
 	getCandidateListSuccess,
 	getCandidateListFail,
 	deleteCandidateById,
+	candidateUpdateStatusById,
 } from 'store/actions/candidates';
 
 export interface CandidatesListReducerState {
@@ -55,12 +58,35 @@ const candidatesListReducer = createReducer<CandidatesListReducerState>(
 			const id = action.payload;
 			const candidatesList = state.candidatesList;
 
-			console.log(candidatesList.filter((val) => val.id !== id));
-
 			return {
 				...state,
 				candidatesList: candidatesList.filter((val) => val.id !== id),
 			};
+		},
+		[candidateUpdateStatusById.type]: (state, action) => {
+			const id = action.payload.candidateId;
+			const status = action.payload.candidateStatus;
+
+			const candidatesList = state.candidatesList;
+			const candidateIndex = candidatesList.findIndex(
+				(val) => val.id === id,
+			);
+
+			if (candidateIndex !== -1) {
+				return {
+					...state,
+					candidatesList: update(state.candidatesList, {
+						[candidateIndex]: {
+							$set: {
+								...candidatesList[candidateIndex],
+								state: status,
+							},
+						},
+					}),
+				};
+			}
+
+			return state;
 		},
 	},
 );

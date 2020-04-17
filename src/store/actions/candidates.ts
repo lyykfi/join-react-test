@@ -4,6 +4,11 @@ import { fetchCandidatesRequest } from 'store/api/candidates';
 import { Candidate } from 'models/candidate';
 import { addIds } from 'utils/candidates';
 
+export interface CandidateUpdateStatusByIdAttrs {
+	candidateId: string;
+	candidateStatus: string;
+}
+
 export const getCandidateListStart = createAction('GET_CANDIDATE_LIST_START');
 
 export const getCandidateListSuccess = createAction<Candidate[]>(
@@ -17,6 +22,10 @@ export const getCandidateListFail = createAction<Error>(
 export const deleteCandidateById = createAction<string>(
 	'DELETE_CANDIDATE_BY_ID',
 );
+
+export const candidateUpdateStatusById = createAction<
+	CandidateUpdateStatusByIdAttrs
+>('UPDATE_CANDIDATE_STATUS_BY_ID');
 
 export const getCandidateList = () => {
 	return async (dispatch: Dispatch): Promise<Candidate[] | null> => {

@@ -14,6 +14,7 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 
 import { Candidate } from 'models/candidate';
 import { StyledCard, StyledCardActions } from './styled';
+import CandidateListItemStatusUpdateDialog from '../CandidateListItemStatusUpdateDialog';
 
 interface CandidateListItemProps {
 	candidate: Candidate | null;
@@ -25,6 +26,7 @@ const CandidateListItem: React.FC<CandidateListItemProps> = (
 ): JSX.Element => {
 	const { candidate, onDeleteCandidate } = props;
 	const [popupEl, setPopupEl] = React.useState(null);
+	const [open, seOpen] = React.useState(false);
 
 	const onShowMenuCallback = useCallback(
 		(event) => {
@@ -42,6 +44,14 @@ const CandidateListItem: React.FC<CandidateListItemProps> = (
 			onDeleteCandidate(candidate.id);
 		}
 	}, [onDeleteCandidate, candidate]);
+
+	const onUpdateCandidateStatusCallback = useCallback(() => {
+		seOpen(true);
+	}, [seOpen]);
+
+	const onPopupCloseCallback = useCallback(() => {
+		seOpen(false);
+	}, [seOpen]);
 
 	return (
 		<StyledCard variant="outlined">
@@ -121,6 +131,11 @@ const CandidateListItem: React.FC<CandidateListItemProps> = (
 								<MenuItem onClick={onDeleteCandidateCallback}>
 									Delete
 								</MenuItem>
+								<MenuItem
+									onClick={onUpdateCandidateStatusCallback}
+								>
+									Update status
+								</MenuItem>
 							</Menu>
 						</>
 					) : (
@@ -128,6 +143,12 @@ const CandidateListItem: React.FC<CandidateListItemProps> = (
 					)}
 				</StyledCardActions>
 			</>
+			<CandidateListItemStatusUpdateDialog
+				open={open}
+				candidateStatus={candidate?.state ?? ''}
+				onClose={onPopupCloseCallback}
+				candidateId={candidate?.id ?? ''}
+			/>
 		</StyledCard>
 	);
 };
