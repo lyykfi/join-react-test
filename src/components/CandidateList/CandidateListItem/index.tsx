@@ -63,6 +63,19 @@ const CandidateListItem: React.FC<CandidateListItemProps> = (
 		seOpen(false);
 	}, [seOpen]);
 
+	const parsedData = useMemo(() => {
+		if (candidate) {
+			const data = new Date(Date.parse(candidate.applied_on));
+			return data.toLocaleString('de-DE', {
+				weekday: 'long',
+				year: 'numeric',
+				month: 'long',
+				day: 'numeric',
+			});
+		}
+		return '';
+	}, [candidate]);
+
 	return (
 		<StyledCard variant="outlined">
 			<>
@@ -119,7 +132,7 @@ const CandidateListItem: React.FC<CandidateListItemProps> = (
 								color="textSecondary"
 								component="p"
 							>
-								{candidate?.applied_on}
+								{parsedData}
 							</Typography>
 						</>
 					) : (
