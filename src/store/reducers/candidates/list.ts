@@ -8,6 +8,7 @@ import {
 	getCandidateListFail,
 	deleteCandidateById,
 	candidateUpdateStatusById,
+	createCandidate,
 } from 'store/actions/candidates';
 
 export interface CandidatesListReducerState {
@@ -61,6 +62,14 @@ const candidatesListReducer = createReducer<CandidatesListReducerState>(
 			return {
 				...state,
 				candidatesList: candidatesList.filter((val) => val.id !== id),
+			};
+		},
+		[createCandidate.type]: (state, action) => {
+			return {
+				...state,
+				candidatesList: update(state.candidatesList, {
+					$push: [action.payload],
+				}),
 			};
 		},
 		[candidateUpdateStatusById.type]: (state, action) => {

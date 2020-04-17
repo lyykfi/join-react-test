@@ -27,6 +27,8 @@ export const candidateUpdateStatusById = createAction<
 	CandidateUpdateStatusByIdAttrs
 >('UPDATE_CANDIDATE_STATUS_BY_ID');
 
+export const createCandidate = createAction<Candidate>('CREATE_CANDIDATE');
+
 export const getCandidateList = () => {
 	return async (dispatch: Dispatch): Promise<Candidate[] | null> => {
 		dispatch(getCandidateListStart());
