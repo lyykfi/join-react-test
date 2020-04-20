@@ -57,7 +57,7 @@ const AddCandidateForm: React.FC<AddCandidateFormProps> = (
 
 	const onSubmitValues = useCallback(() => {
 		const candidate = {
-			fullName: values.firstName + values.lastName,
+			fullName: `${values.firstName} ${values.lastName}`,
 			email: values.email,
 			password: values.password,
 			phone: values.phoneNumber,
