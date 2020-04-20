@@ -1,10 +1,10 @@
-import hash from 'object-hash';
+import { v4 as uuidv4 } from 'uuid';
 
 import { Candidate } from 'models/candidate';
 
 export const addIds = (candidates: Candidate[]): Candidate[] => {
 	return candidates.map((item) => {
-		item.id = hash(item);
+		item.id = uuidv4();
 		return item;
 	});
 };

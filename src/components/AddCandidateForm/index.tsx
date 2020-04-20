@@ -13,7 +13,7 @@ import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import { StyledWrapper } from './styled';
 import { Candidate, CANDIDATE_STATE } from 'models/candidate';
-import hash from 'object-hash';
+import { v4 as uuidv4 } from 'uuid';
 
 interface AddCandidateFormProps {
 	onAddNewCandidate: (candidate: Candidate) => void;
@@ -67,7 +67,7 @@ const AddCandidateForm: React.FC<AddCandidateFormProps> = (
 			state: CANDIDATE_STATE.IN_REVIEW,
 			id: '',
 		};
-		candidate.id = hash(candidate);
+		candidate.id = uuidv4();
 		onAddNewCandidate(candidate);
 	}, [values]);
 
