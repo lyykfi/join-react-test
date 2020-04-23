@@ -10,23 +10,19 @@ export const addIds = (candidates: Candidate[]): Candidate[] => {
 };
 
 export const getCandidateProcentageProfile = (candidate: Candidate): number => {
-	let percentage = 0;
+	const propsWeight: Record<string, number> = {
+		fullName: 20,
+		email: 20,
+		password: 20,
+		phone: 40,
+	};
 
-	if (candidate.fullName) {
-		percentage += 10;
-	}
+	return Object.keys(propsWeight).reduce((acc, key) => {
+		const item = (candidate as any)[key];
+		if (item && item.trim()) {
+			acc = acc + propsWeight[key];
+		}
 
-	if (candidate.email) {
-		percentage += 10;
-	}
-
-	if (candidate.password) {
-		percentage += 10;
-	}
-
-	if (candidate.phone) {
-		percentage += 20;
-	}
-
-	return percentage;
+		return acc;
+	}, 0);
 };
